@@ -1,47 +1,27 @@
 <template>
   <div class="hello">
     <h1>{{ currentCount }}</h1>
-    <h2>Current Count: {{ currentCount1 }}</h2>
-    <h2>Current Count: {{ currentCount2 }}</h2>
-    <button @click="incrementCount2">Add</button>
+    <h2>Current Count: {{ currentCount }}</h2>
+    <button @click="incrementCount">Add</button>
   </div>
 </template>
 
 <script>
-import { reactive, ref, toRefs } from "vue";
+import { useCounterMethod } from "../features/useCounter";
 
 export default {
   name: "HelloWorld",
   props: {
     msg: String,
   },
-  data: () => ({
-    currentCount: 0,
-  }),
-  methods: {
-    incrementCount() {
-      this.currentCount++;
-    },
-  },
 
-// Composition API 
+  // Composition API
   setup() {
-    const state = reactive({
-      currentCount1: 12,
-    });
-
-// Using converting ref to toRefs
-    const currentCount2 = ref(8);
-
-    const incrementCount2 = () => {
-      currentCount2.value++
-    };
-
+    const {currentCount, incrementCount} = useCounterMethod()
     return {
-      ...toRefs(state),
-      incrementCount2,
-      currentCount2,
-    };
+      currentCount,
+      incrementCount
+    }
   },
 };
 </script>
